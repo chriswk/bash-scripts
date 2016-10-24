@@ -38,13 +38,17 @@ while getopts s:l:hd name; do
     esac
 done
 
-if [ -n "$SOLRVERSION" ]; then
+if [ -z "$SOLRVERSION" ]; then
     echo "SOLRVERSION is unset, use -s [VERSION]"
     exit 1
+else
+    echo "Running for Solr version $SOLRVERSION"
 fi
-if [ -n "$LOG4JVERSION" ]; then
-    echo "SOLRVERSION is unset, use -l [VERSION]"
+if [ -z "$LOG4JVERSION" ]; then
+    echo "LOG4JVERSION is unset, use -l [VERSION]"
     exit 1
+else
+    echo "And log4j version $LOG4JVERSION"
 fi
 
 
@@ -53,14 +57,13 @@ deploy_to_maven() {
     mvn deploy:deploy-file -DgroupId=no.finntech.operations -DartifactId=apache-solr -Dversion=$SOLRVERSION -Dpackaging=tar.gz -Dfile=apache-solr-$SOLRVERSION.tar.gz -Durl=http://mavenproxy.finntech.no/nexus/content/repositories/tarballs
 }
 
-echo "Running for solr $SOLRVERSION, and LOG4J $LOG4JVERSION"
 ## Untar and remove unnecessary files
 tar zxf solr-$SOLRVERSION.tgz
 rm -rf solr-$SOLRVERSION/{docs,example,licenses,contrib,dist}
 rm solr-$SOLRVERSION/server/lib/ext/{log4j,jcl-over-slf4j,jul-to-slf4j,slf4j-api,slf4j-log4j12}-*.jar
 
 ## Untar log4jversion and copy needed jars to server/lib/ext
-tar zxf apache-log4j-$LOG4JVERSION
+tar zxf apache-log4j-$LOG4JVERSION.tar.gz
 cp apache-log4j-$LOG4JVERSION/{log4j-1.2-api,log4j-api,log4j-core,log4j-jcl,log4j-jul,log4j-slf4j-impl}-$LOG4JVERSION.jar solr-$SOLRVERSION/server/lib/ext
 
 
