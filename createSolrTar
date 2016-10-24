@@ -55,26 +55,26 @@ deploy_to_maven() {
 
 echo "Running for solr $SOLRVERSION, and LOG4J $LOG4JVERSION"
 ## Untar and remove unnecessary files
-#tar zxf solr-$SOLRVERSION
-#rm -rf solr-$SOLRVERSION/{docs,example,licenses,contrib,dist}
-#rm solr-$SOLRVERSION/server/lib/ext/{log4j,jcl-over-slf4j,jul-to-slf4j,slf4j-api,slf4j-log4j12}-*.jar
+tar zxf solr-$SOLRVERSION
+rm -rf solr-$SOLRVERSION/{docs,example,licenses,contrib,dist}
+rm solr-$SOLRVERSION/server/lib/ext/{log4j,jcl-over-slf4j,jul-to-slf4j,slf4j-api,slf4j-log4j12}-*.jar
 
 ## Untar log4jversion and copy needed jars to server/lib/ext
-#tar zxf apache-log4j-$LOG4JVERSION
-#cp apache-log4j-$LOG4JVERSION/{log4j-1.2-api,log4j-api,log4j-core,log4j-jcl,log4j-jul,log4j-slf4j-impl}-$LOG4JVERSION.jar solr-$SOLRVERSION/server/lib/ext
+tar zxf apache-log4j-$LOG4JVERSION
+cp apache-log4j-$LOG4JVERSION/{log4j-1.2-api,log4j-api,log4j-core,log4j-jcl,log4j-jul,log4j-slf4j-impl}-$LOG4JVERSION.jar solr-$SOLRVERSION/server/lib/ext
 
 
 ## Copy extra jars for solr to start up to server/lib/ext
-#cp ~/.m2/repository/net/logstash/log4j2/log4j2-logstash-jsonevent-layout/4.0.1-finn/log4j2-logstash-jsonevent-layout-4.0.1-finn.jar solr-$SOLRVERSION/server/lib/ext
-#cp ~/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar solr-$SOLRVERSION/server/lib/ext
-#cp ~/.m2/repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar solr-$SOLRVERSION/server/lib/ext
-#cp ~/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar solr-$SOLRVERSION/server/lib/ext
+cp ~/.m2/repository/net/logstash/log4j2/log4j2-logstash-jsonevent-layout/4.0.1-finn/log4j2-logstash-jsonevent-layout-4.0.1-finn.jar solr-$SOLRVERSION/server/lib/ext
+cp ~/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar solr-$SOLRVERSION/server/lib/ext
+cp ~/.m2/repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar solr-$SOLRVERSION/server/lib/ext
+cp ~/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar solr-$SOLRVERSION/server/lib/ext
 
 ## Rename solr folder to expected finn format
-#mv solr-$SOLRVERSION apache-solr-$SOLRVERSION
+mv solr-$SOLRVERSION apache-solr-$SOLRVERSION
 
 ## GZip folder
-#tar zcf apache-solr-$SOLRVERSION.tar.gz apache-solr-$SOLRVERSION
+tar zcf apache-solr-$SOLRVERSION.tar.gz apache-solr-$SOLRVERSION
 
 ## Upload to maven
 if [ $deploy -eq 1 ]; then
