@@ -64,7 +64,7 @@ rm solr-$SOLRVERSION/server/lib/ext/{log4j,jcl-over-slf4j,jul-to-slf4j,slf4j-api
 
 ## Untar log4jversion and copy needed jars to server/lib/ext
 tar zxf apache-log4j-$LOG4JVERSION-bin.tar.gz
-cp apache-log4j-$LOG4JVERSION/{log4j-1.2-api,log4j-api,log4j-core,log4j-jcl,log4j-jul,log4j-slf4j-impl}-$LOG4JVERSION.jar solr-$SOLRVERSION/server/lib/ext
+cp apache-log4j-$LOG4JVERSION-bin/{log4j-1.2-api,log4j-api,log4j-core,log4j-jcl,log4j-jul,log4j-slf4j-impl}-$LOG4JVERSION.jar solr-$SOLRVERSION/server/lib/ext
 
 
 ## Copy extra jars for solr to start up to server/lib/ext
