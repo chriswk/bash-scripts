@@ -38,11 +38,11 @@ while getopts s:l:hd name; do
     esac
 done
 
-if [ -z $SOLRVERSION+x ]; then
+if [ -n "$SOLRVERSION" ]; then
     echo "SOLRVERSION is unset, use -s [VERSION]"
     exit 1
 fi
-if [ -z $LOG4JVERSION+x ]; then
+if [ -n "$LOG4JVERSION" ]; then
     echo "SOLRVERSION is unset, use -l [VERSION]"
     exit 1
 fi
@@ -55,7 +55,7 @@ deploy_to_maven() {
 
 echo "Running for solr $SOLRVERSION, and LOG4J $LOG4JVERSION"
 ## Untar and remove unnecessary files
-tar zxf solr-$SOLRVERSION
+tar zxf solr-$SOLRVERSION.tgz
 rm -rf solr-$SOLRVERSION/{docs,example,licenses,contrib,dist}
 rm solr-$SOLRVERSION/server/lib/ext/{log4j,jcl-over-slf4j,jul-to-slf4j,slf4j-api,slf4j-log4j12}-*.jar
 
